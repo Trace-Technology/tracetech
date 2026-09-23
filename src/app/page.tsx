@@ -5,6 +5,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Services from "./home/Services";
 import TechnicalDepth from "./home/TechnicalDepth";
+import SelectedWork from "@/components/home/SelectedWork";
 
 const container = {
   hidden: {},
@@ -162,6 +163,7 @@ export default function Home() {
 
       <Services />
       <TechnicalDepth />
+      <SelectedWork />
     </div>
   );
 }
