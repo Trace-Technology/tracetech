@@ -657,7 +657,7 @@ function QuoteRequestInner() {
               </div>
             </FadeIn>
 
-            <FadeIn delay={0.2}>
+            <FadeIn delay={0.2} className="hidden lg:block">
               <div className="h-fit rounded-2xl border border-red-200 bg-red-50/60 p-6 sm:p-8 lg:sticky lg:top-24">
                 <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-red-700">
                   <BatteryCharging className="h-4 w-4" /> Your configuration
