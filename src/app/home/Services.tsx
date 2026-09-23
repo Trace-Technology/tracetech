@@ -8,6 +8,7 @@ import FadeIn from "@/components/ui/FadeIn";
 
 const services = [
   {
+    number: "01",
     eyebrow: "E2E Solar",
     title: "End-to-End Solar",
     description:
@@ -24,6 +25,7 @@ const services = [
     slug: "cubesat-solar-array-222w",
   },
   {
+    number: "02",
     eyebrow: "Battery Solutions",
     title: "Complete Battery Solutions",
     description:
@@ -40,6 +42,7 @@ const services = [
     slug: "mppt-solar-charge-controller-300w",
   },
   {
+    number: "03",
     eyebrow: "PCB Design",
     title: "PCB Design",
     description:
@@ -92,6 +95,10 @@ export default function Services() {
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
+
+                      <span className="absolute left-5 top-5 rounded-full bg-red-600 px-3 py-1 text-xs font-bold tracking-widest text-white shadow-lg">
+                        {service.number}
+                      </span>
 
                     </div>
                   </div>
