@@ -69,11 +69,13 @@ export default function Home() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="relative z-10 max-w-7xl mx-auto px-6 py-28 text-left"
+          className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32 text-left overflow-hidden"
+          style={{ maxWidth: '100%', width: '100%' }}
         >
           <motion.h1
             variants={item}
-            className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
+            className="font-bold tracking-tight leading-[1.05] mb-6"
+            style={{ fontSize: 'clamp(2.5rem, 8vw, 6.5rem)' }}
           >
             DESIGN.
             <br />
@@ -92,48 +94,36 @@ export default function Home() {
 
           <motion.p
             variants={item}
-            className="text-xl md:text-2xl text-zinc-400 max-w-2xl mb-10 leading-relaxed"
+            className="text-base md:text-xl text-zinc-400 mb-10 leading-relaxed"
+            style={{ maxWidth: '85vw' }}
           >
             End-to-end solar, battery systems, and custom PCB design of any
             kind — from simple boards to complex systems, from concept to
             production.
           </motion.p>
 
-          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-start mb-14">
+          <motion.div variants={item} className="flex flex-col gap-4 mb-14">
             <Link href="/quote-request?service=pcb">
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-red-600 text-white rounded-full font-semibold text-lg shadow-lg shadow-red-600/30"
-              >
-                Start a Project <ArrowRight className="w-5 h-5" />
-              </motion.a>
+              <div className="inline-flex items-center justify-center gap-2 px-4 py-3 md:px-6 md:py-4 bg-red-600 text-white rounded-full font-semibold text-base md:text-lg shadow-lg shadow-red-600/30">
+                Start a Project <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+              </div>
             </Link>
-            <motion.a
-              href="/work"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/15 text-white rounded-full font-semibold text-lg backdrop-blur-md"
-            >
-              View Projects
-            </motion.a>
+            <Link href="/work">
+              <div className="inline-flex items-center justify-center gap-2 px-4 py-3 md:px-6 md:py-4 bg-white/10 border border-white/15 text-white rounded-full font-semibold text-base md:text-lg backdrop-blur-md">
+                View Projects
+              </div>
+            </Link>
           </motion.div>
 
           {/* Tech marquee — framer-motion only, no custom CSS */}
-          <motion.div variants={item} className="overflow-hidden max-w-3xl mb-12 opacity-70">
-            <motion.div
-              className="flex gap-8 whitespace-nowrap text-sm uppercase tracking-widest text-zinc-500"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-            >
-              {["PCB Design", "Prototyping", "PCB Layout", "Assembly", "Manufacturing", "Any Application", "PCB Design", "Prototyping", "PCB Layout", "Assembly", "Manufacturing", "Any Application"].map(
-                (t) => (
-                  <span key={t} className="flex items-center gap-8">
-                    {t} <span className="text-red-500">•</span>
-                  </span>
-                )
-              )}
-            </motion.div>
+          <motion.div variants={item} className="overflow-hidden mb-12 opacity-70">
+            <div className="flex gap-8 flex-wrap text-sm uppercase tracking-widest text-zinc-500" style={{ maxWidth: '100%' }}>
+              {["PCB Design", "Prototyping", "PCB Layout", "Assembly", "Manufacturing", "Any Application"].map((t, i) => (
+                <span key={`${t}-${i}`} className="flex items-center gap-4">
+                  {t} <span className="text-red-500">•</span>
+                </span>
+              ))}
+            </div>
           </motion.div>
 
           {/* Metrics */}
