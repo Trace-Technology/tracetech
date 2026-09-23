@@ -16,6 +16,7 @@ export interface Project {
   images: string[];
   featured: boolean;
   order: number;
+  serviceType?: "pcb" | "solar" | "battery";
 }
 
 export const categories = [
@@ -36,6 +37,7 @@ export const projects: Project[] = [
   {
     id: "1",
     slug: "cubesat-solar-array-222w",
+    serviceType: "solar",
     title: "CubeSat Solar Array — 222.8 W Deployable Panel System",
     client: "SOLLAB Co., Ltd.",
     role: "Hardware Design Engineer",
@@ -73,6 +75,7 @@ export const projects: Project[] = [
   {
     id: "2",
     slug: "5ch-umppt-pcdu-28v",
+    serviceType: "solar",
     title: "5-Channel UMPPT PCDU — 28 V Unified Bus, 212.6 W",
     client: "SOLLAB Co., Ltd.",
     role: "Hardware Design Engineer",
@@ -110,6 +113,7 @@ export const projects: Project[] = [
   {
     id: "3",
     slug: "1u-cubesat-eps-n1-redundant",
+    serviceType: "pcb",
     title: "1U CubeSat EPS — N-1 Redundant Power System",
     client: "Aviation & Aerospace University Bangladesh",
     role: "Architect, Schematic & PCB Designer",
@@ -147,6 +151,7 @@ export const projects: Project[] = [
   {
     id: "4",
     slug: "1u-cubesat-obc-radio",
+    serviceType: "pcb",
     title: "1U CubeSat OBC & Radio — Full-Stack Flight Avionics",
     client: "Aviation & Aerospace University Bangladesh",
     role: "Architect, Schematic & PCB Designer",
@@ -184,6 +189,7 @@ export const projects: Project[] = [
   {
     id: "5",
     slug: "indigenous-1u-cubesat",
+    serviceType: "pcb",
     title: "Indigenous 1U CubeSat — Full-Stack Hardware",
     client: "AAUB — Undergraduate Thesis",
     role: "System Architect — All Five Subsystems",
@@ -221,6 +227,7 @@ export const projects: Project[] = [
   {
     id: "6",
     slug: "mppt-solar-charge-controller-300w",
+    serviceType: "solar",
     title: "MPPT Solar Charge Controller — 300 W Class",
     client: "International Client",
     role: "Electrical & PCB Design Engineer",
@@ -259,6 +266,7 @@ export const projects: Project[] = [
   {
     id: "7",
     slug: "drone-power-module-150a",
+    serviceType: "pcb",
     title: "4S→6S Series-Injection Drone Power Module — 150 A Burst",
     client: "International Client (NDA)",
     role: "Electrical & PCB Design Engineer",
@@ -296,6 +304,7 @@ export const projects: Project[] = [
   {
     id: "8",
     slug: "uwb-flight-controller-stm32g473",
+    serviceType: "pcb",
     title: "UWB Direction-Finding Flight Controller — STM32G473",
     client: "UAV Client",
     role: "PCB Design Engineer",
@@ -333,6 +342,7 @@ export const projects: Project[] = [
   {
     id: "9",
     slug: "team-ababil-cansat",
+    serviceType: "pcb",
     title: "Team Ababil CanSat — 16th Worldwide, AAS Competition 2025",
     client: "AAS International Competition",
     role: "Electrical & Mechanical Lead",
@@ -370,6 +380,7 @@ export const projects: Project[] = [
   {
     id: "10",
     slug: "rover-71-electrical-architecture",
+    serviceType: "pcb",
     title: "Rover-71 — Four-Board Electrical Architecture",
     client: "Anatolian Rover Challenge (ARC'25)",
     role: "Electrical Lead",
@@ -407,6 +418,7 @@ export const projects: Project[] = [
   {
     id: "11",
     slug: "cc2651r3-wireless-sensor-node",
+    serviceType: "pcb",
     title: "CC2651R3 Wireless Sensor Node — 0.8 µA Sleep",
     client: "International Client",
     role: "PCB & Embedded Hardware Engineer",
@@ -444,6 +456,7 @@ export const projects: Project[] = [
   {
     id: "12",
     slug: "solar-energy-harvesting-97pct",
+    serviceType: "solar",
     title: "Solar Energy Harvesting PCB — 97% Boost Efficiency",
     client: "International Client",
     role: "PCB & Embedded Hardware Engineer",

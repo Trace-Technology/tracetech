@@ -21,6 +21,8 @@ const services = [
       "Inverters",
       "Production Assembly",
     ],
+    serviceType: "solar",
+    slug: "cubesat-solar-array-222w",
   },
   {
     number: "02",
@@ -36,6 +38,8 @@ const services = [
       "Thermal Management",
       "Safety & Compliance",
     ],
+    serviceType: "battery",
+    slug: "mppt-solar-charge-controller-300w",
   },
   {
     number: "03",
@@ -51,6 +55,8 @@ const services = [
       "Power Electronics",
       "DFM Optimization",
     ],
+    serviceType: "pcb",
+    slug: "indigenous-1u-cubesat",
   },
 ];
 
@@ -95,36 +101,32 @@ export default function Services() {
                     </div>
                   </div>
 
-                  {/* Text side */}
-                  <div className={flip ? "md:order-1" : ""}>
-                    <h3 className="mb-3 text-2xl font-bold text-zinc-900 md:text-3xl">
-                      {service.title}
-                    </h3>
-                    <p className="mb-6 leading-relaxed text-zinc-600">
-                      {service.description}
-                    </p>
+                        {/* Text side */}
+                        <div className={flip ? "md:order-1" : ""}>
+                          <h3 className="mb-3 text-2xl font-bold text-zinc-900 md:text-3xl">
+                            {service.title}
+                          </h3>
+                          <p className="mb-6 leading-relaxed text-zinc-600">
+                            {service.description}
+                          </p>
 
-                    <div className="mb-8 flex flex-wrap gap-2">
-                      {service.details.map((detail) => (
-                        <span
-                          key={detail}
-                          className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-sm text-red-700"
-                        >
-                          {detail}
-                        </span>
-                      ))}
-                    </div>
+                          <div className="mb-8 flex flex-wrap gap-2">
+                            {service.details.map((detail) => (
+                              <span
+                                key={detail}
+                                className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-sm text-red-700"
+                              >
+                                {detail}
+                              </span>
+                            ))}
+                          </div>
 
-                    <Link href={`/quote-request?service=${i === 0 ? 'pcb' : i === 1 ? 'battery' : 'solar'}`}>
-                      <motion.a
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.97 }}
-                        className="inline-flex items-center gap-2 rounded-full bg-red-600 px-7 py-3 font-semibold text-white shadow-lg shadow-red-600/25 transition-colors hover:bg-red-700"
-                      >
-                        Get a Free Quote <ArrowRight className="h-4 w-4" />
-                      </motion.a>
-                    </Link>
-                  </div>
+                          <Link href={`/quote-request?service=${service.serviceType}`}>
+                            <div className="inline-flex items-center gap-2 rounded-full bg-red-600 px-7 py-3 font-semibold text-white shadow-lg shadow-red-600/25 transition-colors hover:bg-red-700">
+                              Get a Free Quote <ArrowRight className="h-4 w-4" />
+                            </div>
+                          </Link>
+                        </div>
                 </div>
               </FadeIn>
             );

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { projects, getProjectBySlug } from "@/lib/projects";
+import { getProjectBySlug } from "@/lib/projects";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import ImageCarousel from "@/components/ui/ImageCarousel";
@@ -7,7 +7,7 @@ import FadeIn from "@/components/ui/FadeIn";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return projects.map((p) => ({ slug: p.slug, serviceType: p.serviceType || "pcb" }));
 }
 
 export default async function CaseStudyPage({
@@ -125,7 +125,9 @@ export default async function CaseStudyPage({
           <p className="mt-2 text-sm text-zinc-500">
             Let us help you engineer your next hardware product.
           </p>
-          <Button href="#" className="mt-6">
+          <Button 
+            href={`/quote-request?service=${project.serviceType || "pcb"}`}
+          >
             Place Order
           </Button>
         </div>
