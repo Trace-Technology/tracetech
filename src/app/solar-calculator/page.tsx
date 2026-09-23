@@ -272,7 +272,7 @@ export default function SolarCalculatorPage() {
 
 
 
-  const quoteHref = result ? `/contact?monthlyBill=${Math.round(result.grossAverageBill)}&averageUnits=${result.averageUnits}&solarUnits=${result.solarUnits}` : "/contact";
+  const quoteHref = "/quote-request?service=solar";
 
 
 
@@ -352,7 +352,7 @@ export default function SolarCalculatorPage() {
 
 
 
-          <FadeIn delay={0.2}>
+          <FadeIn delay={0.2} className="hidden lg:block">
 
             <section className="h-fit rounded-xl border border-solar/30 bg-solar/[0.07] p-6 sm:p-8 lg:sticky lg:top-24"><p className="text-sm font-semibold uppercase tracking-widest text-red-500">Your estimate</p>{result ? <><div className="mt-6 grid grid-cols-2 gap-5"><Metric label="Average bill" value={`à§³${formatNumber(result.grossAverageBill)}`} /><Metric label={`VAT + estimated demand charge (${formatNumber(result.estimatedVatAndDemandCharge / result.grossAverageBill * 100, 1)}%)`} value={`à§³${formatNumber(result.estimatedVatAndDemandCharge)}`} /><Metric label="Estimated usage" value={`${formatNumber(result.averageUnits)} units`} /><Metric label="Solar generation" value={`${formatNumber(result.solarUnits)} units`} /><Metric label="Roof area needed" value={`${formatNumber(result.area, 1)} mÂ²`} /></div><div className="mt-8 rounded-lg border border-white/10 bg-navy-950/40 p-4"><div className="flex justify-between gap-4 text-sm"><span className="text-navy-400">Estimated bill after solar</span><span className="font-semibold text-white">à§³{formatNumber(result.estimatedNewGrossBill)}</span></div><div className="mt-3 flex justify-between gap-4 text-sm"><span className="text-navy-400">Estimated bill reduction</span><span className="font-semibold text-accent-green">{formatNumber(result.billSavingsPercent, 1)}%</span></div>{result.newSlab < result.oldSlab && <p className="mt-4 border-t border-white/10 pt-4 text-sm text-red-500">Your target moves you down {result.oldSlab - result.newSlab} tariff level{result.oldSlab - result.newSlab > 1 ? "s" : ""}.</p>}</div><Link href={quoteHref} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-solar px-6 py-3 font-semibold text-navy-950 transition-all hover:bg-solar-dark hover:shadow-lg hover:shadow-solar/20">Book a free quotation <ArrowRight className="h-4 w-4" /></Link></> : <p className="mt-6 text-navy-300">Add at least one bill to see your estimated usage, savings, and roof area.</p>}<p className="mt-5 text-xs leading-5 text-navy-500">Usage estimation removes 5% VAT first, then applies a weighted demand charge from 5% to 15% based on the post-VAT bill before applying electricity rates. Planning estimate: 1 unit of monthly generation uses approximately 0.2 mÂ² of roof area. Final sizing depends on your roof, shade, panel choice, and site survey.</p></section>
 
@@ -362,7 +362,7 @@ export default function SolarCalculatorPage() {
 
 
 
-        <FadeIn delay={0.15}><section className="mt-12 border-t border-white/10 pt-10"><h2 className="text-xl font-semibold text-white">Bangladesh electricity usage rates</h2><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{tariffs.map((tariff) => <div key={tariff.label} className="rounded-lg border border-white/5 bg-white/2 p-4"><p className="text-sm text-navy-400">{tariff.label}</p><p className="mt-1 font-medium text-white">{tariff.range}</p><p className="mt-2 text-sm text-red-500">à§³{tariff.rate.toFixed(2)} / unit</p></div>)}</div></section></FadeIn>
+        <FadeIn delay={0.15} className="hidden lg:block"><section className="mt-12 border-t border-white/10 pt-10"><h2 className="text-xl font-semibold text-white">Bangladesh electricity usage rates</h2><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{tariffs.map((tariff) => <div key={tariff.label} className="rounded-lg border border-white/5 bg-white/2 p-4"><p className="text-sm text-navy-400">{tariff.label}</p><p className="mt-1 font-medium text-white">{tariff.range}</p><p className="mt-2 text-sm text-red-500">à§³{tariff.rate.toFixed(2)} / unit</p></div>)}</div></section></FadeIn>
 
       </div>
 

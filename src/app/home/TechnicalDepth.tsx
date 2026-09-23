@@ -64,16 +64,13 @@ export default function TechnicalDepth() {
               Deep capability across the full hardware development stack.
             </p>
           </div>
+        </FadeIn>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {expertise.map((item, i) => (
-              <FadeIn key={item.title} delay={i * 0.08}>
-                <motion.div
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6 }}
-                  whileHover={{ y: -4 }}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {expertise.map((item, i) => (
+            <FadeIn key={item.title} delay={i * 0.08}>
+              <motion.div
+                whileHover={{ y: -4 }}
                   className="rounded-2xl bg-zinc-900/50 border border-red-500/30 backdrop-blur-md px-4 py-6"
                   style={{ height: "180px" }}
                 >
@@ -92,8 +89,7 @@ export default function TechnicalDepth() {
                 </motion.div>
               </FadeIn>
             ))}
-          </div>
-        </FadeIn>
+        </div>
       </div>
     </section>
   );

@@ -95,7 +95,7 @@ export default function AboutPage() {
             <p className="mt-2 text-red-200">
               Let&apos;s build something great together.
             </p>
-            <Button href="/place-order" className="mt-6">
+            <Button href="/quote-request" className="mt-6">
               Place Order
             </Button>
           </div>

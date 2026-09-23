@@ -20,6 +20,15 @@ import { useSearchParams } from "next/navigation";
 import FadeIn from "@/components/ui/FadeIn";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
+import {
+  standardTariffs,
+  cityCorporationTariffs,
+  VAT_RATE,
+  billForUnits,
+  unitsForBill,
+  weightedUnitAdjustment,
+  formatNumber,
+} from "@/lib/solar";
 
 type ServiceType = "pcb" | "solar" | "battery";
 
@@ -34,96 +43,7 @@ type FormData = {
   deliveryDate: string;
 };
 
-/* ------------------------------------------------------------------ */
-/* Solar calculator logic (ported from the Solaris calculator page)    */
-/* ------------------------------------------------------------------ */
-
-const standardTariffs = [
-  { label: "Lifeline", range: "0-50 units", from: 0, to: 50, rate: 4.63 },
-  { label: "1st slab", range: "0-75 units", from: 0, to: 75, rate: 5.26 },
-  { label: "2nd slab", range: "76-200 units", from: 76, to: 200, rate: 7.2 },
-  { label: "3rd slab", range: "201-300 units", from: 201, to: 300, rate: 7.59 },
-  { label: "4th slab", range: "301-400 units", from: 301, to: 400, rate: 8.02 },
-  { label: "5th slab", range: "401-600 units", from: 401, to: 600, rate: 12.67 },
-  { label: "6th slab", range: "Above 600 units", from: 601, to: Infinity, rate: 14.61 },
-];
-
-const cityCorporationTariffs = [
-  { label: "Lifeline", range: "0-50 units", from: 0, to: 50, rate: 4.63 },
-  { label: "1st step", range: "0-75 units", from: 0, to: 75, rate: 5.26 },
-  { label: "2nd step", range: "76-200 units", from: 76, to: 200, rate: 8.5 },
-  { label: "3rd step", range: "201-300 units", from: 201, to: 300, rate: 9.1 },
-  { label: "4th step", range: "301-400 units", from: 301, to: 400, rate: 9.62 },
-  { label: "5th step", range: "401-600 units", from: 401, to: 600, rate: 15.01 },
-  { label: "6th step", range: "Above 600 units", from: 601, to: Infinity, rate: 17.35 },
-];
-
-const VAT_RATE = 0.05;
-
-function billForUnits(units: number, tariffs: typeof standardTariffs) {
-  const usage = Math.max(0, units);
-  const slab = tariffs.find((tariff) => usage <= tariff.to) ?? tariffs.at(-1)!;
-  return usage * slab.rate;
-}
-
-function unitsForBill(bill: number, tariffs: typeof standardTariffs) {
-  if (bill <= 0) return 0;
-
-  let low = 0;
-  let high = Math.max(100, bill / 4.63 + 1);
-  while (billForUnits(high, tariffs) < bill) high *= 2;
-
-  for (let i = 0; i < 50; i += 1) {
-    const middle = (low + high) / 2;
-    if (billForUnits(middle, tariffs) < bill) low = middle;
-    else high = middle;
-  }
-
-  const lowerUnits = Math.floor(low);
-  const upperUnits = Math.ceil(high);
-  return Math.abs(billForUnits(lowerUnits, tariffs) - bill) <=
-    Math.abs(billForUnits(upperUnits, tariffs) - bill)
-    ? lowerUnits
-    : upperUnits;
-}
-
-const weightedUnitPoints = [
-  { units: 14, adjustment: -4 },
-  { units: 264, adjustment: -13 },
-  { units: 304, adjustment: 32 },
-];
-
-function weightedUnitAdjustment(units: number) {
-  const firstPoint = weightedUnitPoints[0];
-  const middlePoint = weightedUnitPoints[1];
-  const lastPoint = weightedUnitPoints[2];
-  const clampedUnits = Math.min(Math.max(units, firstPoint.units), lastPoint.units);
-
-  const firstWeight =
-    ((clampedUnits - middlePoint.units) * (clampedUnits - lastPoint.units)) /
-    ((firstPoint.units - middlePoint.units) * (firstPoint.units - lastPoint.units));
-  const middleWeight =
-    ((clampedUnits - firstPoint.units) * (clampedUnits - lastPoint.units)) /
-    ((middlePoint.units - firstPoint.units) * (middlePoint.units - lastPoint.units));
-  const lastWeight =
-    ((clampedUnits - firstPoint.units) * (clampedUnits - middlePoint.units)) /
-    ((lastPoint.units - firstPoint.units) * (lastPoint.units - middlePoint.units));
-
-  return (
-    firstWeight * firstPoint.adjustment +
-    middleWeight * middlePoint.adjustment +
-    lastWeight * lastPoint.adjustment
-  );
-}
-
-function formatNumber(value: number, digits = 0) {
-  return new Intl.NumberFormat("en-BD", {
-    maximumFractionDigits: digits,
-    minimumFractionDigits: digits,
-  }).format(value);
-}
-
-/* ------------------------------------------------------------------ */
+/* Solar calculator logic lives in @/lib/solar (shared with admin). */
 /* Battery builder options (same flow as the Palki battery builder)    */
 /* ------------------------------------------------------------------ */
 
@@ -314,6 +234,27 @@ function QuoteRequestInner() {
           requirement,
           deliveryDate: form.deliveryDate,
           monthlyBill: isSolar ? monthlyBillValue : form.monthlyBill,
+          ...(isSolar
+            ? {
+                monthlyBills: months.map((month) => month.bill),
+                cityCorporation: isCityCorporation,
+                solarPercent,
+              }
+            : {}),
+          ...(isBattery
+            ? {
+                batteryType: packType,
+                grade,
+                cellCapacity: cell,
+                bms,
+                enclosure: box,
+                dimLength: dimLen,
+                dimWidth: dimWid,
+                dimHeight: dimHgt,
+                waterproof: wp,
+                quantity: qty,
+              }
+            : {}),
         }),
       });
 
@@ -498,7 +439,7 @@ function QuoteRequestInner() {
                 </Card>
               </FadeIn>
 
-              <FadeIn delay={0.2}>
+              <FadeIn delay={0.2} className="hidden lg:block">
                 <div className="h-fit rounded-2xl border border-red-200 bg-red-50/60 p-6 sm:p-8 lg:sticky lg:top-24">
                   <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-red-700">
                     <Calculator className="h-4 w-4" /> Your estimate
@@ -552,7 +493,7 @@ function QuoteRequestInner() {
               </FadeIn>
             </div>
 
-            <FadeIn delay={0.15}>
+            <FadeIn delay={0.15} className="hidden lg:block">
               <section className="mt-12 border-t border-zinc-200 pt-10">
                 <h2 className="text-xl font-bold text-zinc-900">Electricity usage rates</h2>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

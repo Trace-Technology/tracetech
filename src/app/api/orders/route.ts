@@ -12,6 +12,19 @@ const orderSchema = z.object({
   requirement: z.string().min(1, "Requirement is required"),
   deliveryDate: z.string().min(1, "Delivery date is required"),
   monthlyBill: z.string().optional(),
+  monthlyBills: z.array(z.string()).optional(),
+  cityCorporation: z.boolean().optional(),
+  solarPercent: z.number().optional(),
+  batteryType: z.string().optional(),
+  grade: z.string().optional(),
+  cellCapacity: z.string().optional(),
+  bms: z.string().optional(),
+  enclosure: z.string().optional(),
+  dimLength: z.string().optional(),
+  dimWidth: z.string().optional(),
+  dimHeight: z.string().optional(),
+  waterproof: z.string().optional(),
+  quantity: z.string().optional(),
 });
 
 export async function POST(request: Request) {
@@ -30,6 +43,22 @@ export async function POST(request: Request) {
       requirement: validated.requirement,
       deliveryDate: validated.deliveryDate,
       monthlyBill: validated.monthlyBill || undefined,
+      monthlyBills: (() => {
+        const bills = validated.monthlyBills?.filter((bill) => bill.trim() !== "");
+        return bills?.length ? bills : undefined;
+      })(),
+      cityCorporation: validated.cityCorporation,
+      solarPercent: validated.solarPercent,
+      batteryType: validated.batteryType || undefined,
+      grade: validated.grade || undefined,
+      cellCapacity: validated.cellCapacity || undefined,
+      bms: validated.bms || undefined,
+      enclosure: validated.enclosure || undefined,
+      dimLength: validated.dimLength || undefined,
+      dimWidth: validated.dimWidth || undefined,
+      dimHeight: validated.dimHeight || undefined,
+      waterproof: validated.waterproof || undefined,
+      quantity: validated.quantity || undefined,
       status: "unopened",
     });
 

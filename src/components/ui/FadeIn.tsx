@@ -31,7 +31,7 @@ export default function FadeIn({
       initial="hidden"
       animate={isInView ? "show" : "hidden"}
       transition={{ delay: delay * 0.1, duration }}
-      className={`transition-all duration-500 ${className}`}
+      className={className}
     >
       {children}
     </motion.div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Section from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/Section";
 import FadeIn from "@/components/ui/FadeIn";
@@ -71,10 +72,10 @@ export default function HowItWorks() {
         <FadeIn delay={0.3}>
           <div className="rounded-2xl bg-zinc-900/50 border border-white/30 backdrop-blur-md px-8 py-6">
             <h3 className="text-lg font-bold text-white">Ready to start?</h3>
-            <p className="mt-2 text-sm text-red-200">Submit your project details and we'll get back to you within 1 business day.</p>
-            <button className="mt-4 rounded-lg bg-red-600 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-red-700">
+            <p className="mt-2 text-sm text-red-200">Submit your project details and we&apos;ll get back to you within 1 business day.</p>
+            <Link href="/quote-request" className="mt-4 inline-block rounded-lg bg-red-600 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-red-700">
               Get Started
-            </button>
+            </Link>
           </div>
         </FadeIn>
       </div>

@@ -21,6 +21,21 @@ export interface IQuotation extends Document {
   requirement: string;
   deliveryDate: string;
   monthlyBill?: string;
+  /* Solar calculator inputs — present when service is solar. */
+  monthlyBills?: string[];
+  cityCorporation?: boolean;
+  solarPercent?: number;
+  /* Battery builder inputs — present when service is battery. */
+  batteryType?: string;
+  grade?: string;
+  cellCapacity?: string;
+  bms?: string;
+  enclosure?: string;
+  dimLength?: string;
+  dimWidth?: string;
+  dimHeight?: string;
+  waterproof?: string;
+  quantity?: string;
   status: QuotationStatus;
   createdAt: Date;
   updatedAt: Date;
@@ -41,6 +56,19 @@ const QuotationSchema = new Schema<IQuotation>(
     requirement: { type: String, required: true },
     deliveryDate: { type: String, required: true },
     monthlyBill: { type: String, trim: true },
+    monthlyBills: { type: [String], default: undefined },
+    cityCorporation: { type: Boolean, default: undefined },
+    solarPercent: { type: Number, default: undefined },
+    batteryType: { type: String, trim: true },
+    grade: { type: String, trim: true },
+    cellCapacity: { type: String, trim: true },
+    bms: { type: String, trim: true },
+    enclosure: { type: String, trim: true },
+    dimLength: { type: String, trim: true },
+    dimWidth: { type: String, trim: true },
+    dimHeight: { type: String, trim: true },
+    waterproof: { type: String, trim: true },
+    quantity: { type: String, trim: true },
     status: {
       type: String,
       enum: [
