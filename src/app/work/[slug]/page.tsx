@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProjectBySlug } from "@/lib/projects";
+import { getProjectBySlug, projects } from "@/lib/projects";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import ImageCarousel from "@/components/ui/ImageCarousel";
@@ -7,7 +7,7 @@ import FadeIn from "@/components/ui/FadeIn";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug, serviceType: p.serviceType || "pcb" }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
 export default async function CaseStudyPage({
